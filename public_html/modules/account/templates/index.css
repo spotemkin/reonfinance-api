@@ -1,0 +1,41 @@
+/* Current module */
+
+.items_cell input
+{
+    width: 100px;
+}
+
+.items_cell_edit_pass_img
+{
+    width: 124px;
+}
+
+.items_cell_reg_date
+{
+   padding-left: 20px;
+}
+
+@media (max-device-width: 480px) {
+
+    /* Current module */
+
+    .items_cell_phone form
+    {
+        width: 300px;
+    }
+
+    .items_cell_phone input
+    {
+        width: 90%;
+    }
+
+    .items_cell_edit_pass{
+        width: 300px;
+
+    }
+
+    .items_cell_edit_pass input{
+        width: 90%;
+    }
+
+}

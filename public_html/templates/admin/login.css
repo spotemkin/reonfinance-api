@@ -1,0 +1,135 @@
+
+/* Admin login */
+
+.admin_login_content {
+    font-family: Arial, tahoma, serif;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+#admin_login_background {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    background: url("/templates/admin/images/bg_auth.jpg") no-repeat;
+    background-size: cover;
+    z-index: -1;
+}
+
+.admin_login {
+    padding: 5px;
+    color: #9AA1A8;
+    background-color: rgba(39, 54, 66, 0.91);
+    border-radius: 5px;
+}
+
+.admin_login_logo
+{
+    text-align: center;
+}
+
+.admin_login > form {
+    height: 300px;
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.admin_login > form > div {
+    padding: 10px;
+}
+
+.admin_login > form > div > div {
+    padding-bottom: 5px;
+}
+
+.admin_login_logo {
+    width: 400px;
+    text-align: center;
+}
+
+.admin_login > form input {
+    width: 350px;
+    border-radius: 5px;
+    border: none;
+    height: 30px;
+    line-height: 30px;
+    font-size: 17px;
+    padding-left: 5px;
+}
+
+#admin_login_submit {
+    height: 35px;
+    width: 356px;
+    background-color: #1DAAFC;
+    color: #ECF8FF;
+    font-size: 15px;
+    vertical-align: center;
+    cursor: pointer;
+}
+
+@media (max-device-width: 480px) {
+
+    .admin_login {
+        padding: 5px;
+        color: #9AA1A8;
+        background-color: rgba(39, 54, 66, 0.91);
+        border-radius: 5px;
+
+        width: 90%;
+        height: 60%;
+
+        font-size: 40px;
+    }
+
+    .admin_login > form {
+        height: 100%;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .admin_login > form > div {
+        padding: 10px;
+    }
+
+    .admin_login > form > div > div {
+        padding-bottom: 5px;
+    }
+
+    .admin_login_logo {
+        width: 400px;
+        text-align: center;
+    }
+
+    .admin_login > form input {
+        width: 350px;
+        border-radius: 5px;
+        border: none;
+        height: 30px;
+        line-height: 30px;
+        font-size: 17px;
+        padding-left: 5px;
+    }
+
+    #admin_login_submit {
+        height: 35px;
+        width: 356px;
+        background-color: #1DAAFC;
+        color: #ECF8FF;
+        font-size: 15px;
+        vertical-align: center;
+        cursor: pointer;
+    }
+
+}

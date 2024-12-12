@@ -1,0 +1,388 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&display=swap');
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+:after, :before{
+    box-sizing: border-box;
+}
+body{
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+    font-size: 20px;
+    line-height: 24px;
+    color: #E1D3C1;
+    background: #222222;
+}
+.promo{
+    background: url(../../../../templates/admin/assets/img/bg.jpeg) no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+.logo.center{
+    margin: 22px auto 0 auto;
+    display: block;
+    width: fit-content;
+}
+#inform,
+#reg,
+#description,
+#about,
+#for_whom{
+    margin: 40px 0 20px 0;
+}
+#inform .container,
+#reg .container,
+#description .container,
+#about .container,
+#for_whom .container{
+    background: rgba(34, 34, 34, 0.7);
+    border-radius: 20px;
+    max-width: 892px;
+    padding: 36px 30px;
+    margin: 0 auto;
+}
+#inform .title,
+#reg .title,
+#about .title,
+#for_whom .title{
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 200;
+    font-size: 26px;
+    line-height: 31px;
+    text-align: center;
+    color: #E1D3C1;
+    margin-bottom: 34px;
+}
+#inform form{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+#inform .left{
+    width: 36%;
+}
+#inform .left img{
+    width: 100%;
+    border-radius: 20px;
+}
+#inform .right{
+    width: 56%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+#inform .right .text{
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+    font-size: 18px;
+    line-height: 22px;
+    color: #E1D3C1;
+    width: 80%;
+}
+#inform .right .bot{
+    width: 92%;
+    margin-bottom: 3px;
+}
+#inform .right input{
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+    font-size: 18px;
+    line-height: 22px;
+    display: flex;
+    align-items: center;
+    color: #E1D3C1;
+    background: none;
+    border: none;
+    border-bottom: 2px solid #4F3F84;
+    height: 40px;
+    width: 100%;
+}
+#inform .right input::placeholder{
+    color: #E1D3C1;
+}
+#inform .right input.btn{
+    font-family: 'Montserrat', sans-serif;
+    background: #4F3F84;
+    border-radius: 15px;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 20px;
+    line-height: 24px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    color: #E1D3C1;
+    width: 100%;
+    height: 70px;
+    margin-top: 32px;
+    cursor: pointer;
+    opacity: 1;
+    transition: all 0.5s;
+}
+#inform .right input.btn:hover{
+    opacity: 0.8;
+}
+#otziv{
+    margin-bottom: 50px;
+}
+#otziv .container{
+    background: rgba(34, 34, 34, 0.7);
+    border-radius: 20px;
+    max-width: 892px;
+    padding: 46px;
+    margin: 0 auto;
+}
+#otziv .flex{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+#otziv .flex .img{
+    width: 19%;
+    position: relative;
+}
+#otziv .flex .img img{
+    width: 100%;
+    border-radius: 50%;
+}
+#dummy {
+    margin-top: 100%;
+    /* 4:3 aspect ratio */
+}
+#element {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border-radius: 50%;
+    border: #E1D3C1 1px solid;
+
+    color: #E1D3C1;
+    background-color: #222222B2;
+
+}
+#otziv .flex .mess{
+    width: 75.3%;
+}
+#otziv .flex .mess .avtor{
+    font-family: 'Montserrat', sans-serif;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 12px;
+    line-height: 15px;
+    display: flex;
+    align-items: center;
+    color: #E1D3C1;
+}
+#otziv .flex .mess .name{
+    font-family: 'Montserrat', sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 20px;
+    line-height: 24px;
+    display: flex;
+    align-items: center;
+    color: #E1D3C1;
+    margin-bottom: 14px;
+}
+#otziv .flex .mess .tetx{
+    font-family: 'Montserrat', sans-serif;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 18px;
+    line-height: 22px;
+    color: #E1D3C1;
+    margin: 2px 0 0 0;
+}
+
+#reg form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+#reg .input_container{
+    width: 56%;
+}
+#reg .input_container input{
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+    font-size: 18px;
+    line-height: 22px;
+    display: flex;
+    align-items: center;
+    color: #E1D3C1;
+    background: none;
+    border: none;
+    border-bottom: 2px solid #4F3F84;
+    height: 40px;
+    width: 100%;
+}
+#reg .input_container input::placeholder{
+    color: #E1D3C1;
+}
+#reg .input_container input.btn{
+    font-family: 'Montserrat', sans-serif;
+    background: #4F3F84;
+    border-radius: 15px;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 20px;
+    line-height: 24px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    color: #E1D3C1;
+    width: 100%;
+    height: 70px;
+    margin-top: 32px;
+    cursor: pointer;
+    opacity: 1;
+    transition: all 0.5s;
+}
+#reg .input_container input.btn:hover{
+    opacity: 0.8;
+}
+#about .container .text,
+#for_whom .container .text{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
+#about .container .text .data,
+#for_whom .container .text .data{
+    width: 30%;
+}
+
+#about .container .text .data img,
+#for_whom .container .text .data img{
+    width: 100%;
+}
+
+@media(max-width: 991px){
+    #inform .container,
+    #reg .container,
+    #otziv .container,
+    #description .container,
+    #about .container,
+    #for_whom .container{
+        max-width: 720px;
+    }
+
+    #about .container .text .data,
+    #for_whom .container .text .data{
+        width: 40%;
+    }
+
+}
+@media(max-width: 767px){
+    #inform .container,
+    #reg .container,
+    #otziv .container,
+    #description .container,
+    #about .container,
+    #for_whom .container{
+        max-width: 540px;
+    }
+    #inform .left {
+        width: 100%;
+        margin-bottom: 25px;
+    }
+    #inform .right {
+        width: 100%;
+    }
+    #inform .right .text{
+        width: 100%;
+        margin-bottom: 30px;
+    }
+    #inform .right .bot {
+        width: 100%;
+    }
+    #otziv .flex .img {
+        width: 100%;
+        max-width: 151px;
+        margin: 0 auto 20px auto;
+    }
+    #otziv .flex .mess {
+        width: 100%;
+    }
+    #otziv .flex .mess .avtor{
+        justify-content: center;
+    }
+    #otziv .flex .mess .name{
+        justify-content: center;
+        margin-bottom: 30px;
+    }
+    #otziv .flex .mess .name + .avtor{
+        justify-content: end;
+    }
+    #reg .input_container{
+        width: 100%;
+    }
+}
+@media(max-width: 575px){
+    #inform .container,
+    #reg .container,
+    #otziv .container,
+    #description .container,
+    #about .container,
+    #for_whom .container{
+        max-width: 100%;
+        background: none;
+        padding: 0 28px;
+    }
+    #inform .container{
+        padding: 0;
+    }
+    header{
+        display: none;
+    }
+    #inform {
+        margin: 0 0 40px 0;
+    }
+    #inform .title{
+        height: 81px;
+        background: rgba(34, 34, 34, 0.7);
+        align-items: center;
+        display: flex;
+        justify-content: center;
+        border-bottom: 1px solid #E1D3C1;
+        margin-bottom: 30px;
+    }
+    #inform form{
+        padding: 0 38px;
+    }
+    #inform .right input,
+    #reg .input_container input{
+        background: rgba(34, 34, 34, 0.7);
+        margin: 0 0 0 -38px;
+        width: calc(100% + 75px);
+        padding: 0 11px;
+        height: 50px;
+    }
+
+    #inform .right input.btn,
+    #reg .input_container input.btn{
+        padding: 0;
+        margin: 30px auto 0 auto;
+    }
+    #about .container .text .data,
+    #for_whom .container .text .data{
+        width: 100%;
+    }
+
+
+}

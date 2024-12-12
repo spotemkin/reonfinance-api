@@ -1,0 +1,201 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title><title /></title>
+    <utm_html />
+</head>
+<script>
+
+    function change_action_type(){
+        if (document.getElementById('action_type').value === 'reg'){
+            document.getElementById('action_title').innerHTML = 'Вход'
+            document.getElementById('submit_button').value = 'Войти'
+            document.getElementById('name_field').type = 'hidden'
+            document.getElementById('password').type = 'password'
+            document.getElementById('action_type').value = 'login'
+            document.getElementById('action_change_button').innerHTML =
+                'Нет аккаунта? <a style="text-decoration: underline" onclick="change_action_type()">Регистрация</a>'
+        }
+        else if (document.getElementById('action_type').value === 'login'){
+            document.getElementById('action_title').innerHTML = 'Регистрация'
+            document.getElementById('submit_button').value = 'Зарегистрироваться'
+            document.getElementById('password').type = 'hidden'
+            document.getElementById('name_field').type = 'text'
+            document.getElementById('action_type').value = 'reg'
+            document.getElementById('action_change_button').innerHTML =
+                'Уже есть аккаунт? <a style="text-decoration: underline" onclick="change_action_type()">Войти</a>'
+        }
+    }
+
+    function action_(){
+        let xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function () {
+            if (this.readyState === 4)
+            {
+                let output = JSON.parse(this.responseText);
+                //alert(document.cookie)
+                if (this.responseText === '{}'){
+                    document.getElementById('send_form').style.display = 'none'
+                    document.getElementById('activate_form').style.display = 'inherit'
+                }
+                else if ("token" in output){
+                    let cookie = document.cookie.split(';')
+
+                    let f = false
+                    let date = new Date();
+
+                    // Default at 365 days.
+                    let days = 1000000;
+
+                    date.setTime(+ date + (days * 86400000));
+
+                    // Get unix milliseconds at current time plus number of days
+                    date.setTime(+ date + (days * 86400000)); //24 * 60 * 60 * 1000
+                    cookie.forEach(a => {
+                        if (a.indexOf('utm_id_login') !== -1){
+                            f = true
+                            let check = a.substr('utm_id_login='.length + 1)
+                            check = check.split(',')
+                            let new_utm_id_login = a + "; max-age=31536000; path=/"
+
+                            let f1 = false
+                            check.forEach(b =>{
+                                if (b === '<utm_id />')
+                                    f1 = true
+                            })
+
+                            if (!f1)
+                                new_utm_id_login = a + ',' + <utm_id /> + "; max-age=31536000; path=/"
+
+                            document.cookie = new_utm_id_login
+                        }
+                        else if (!f){
+                            let new_utm_id_login = 'utm_id_login=' + <utm_id /> + "; max-age=31536000; path=/"
+                            document.cookie = new_utm_id_login
+                        }
+                    })
+
+                    let nexturl = '<front_url />/?newtoken=' + output['token'];
+                    location.href = nexturl
+                }
+                else{
+                    alert("Пользователь с такими данными не найден")
+                }
+            }
+        }
+        let send = new FormData(document.getElementById('send_form'));
+
+        let cookie = document.cookie.split(';')
+        cookie.forEach(a => {
+            if (a.indexOf('utm_id_login') !== -1){
+
+                let check = a.substr('utm_id_login='.length + 1)
+                check = check.split(',')
+
+                let f1 = false
+                check.forEach(b =>{
+                    if (b === '<utm_id />')
+                        f1 = true
+                })
+
+                if (f1)
+                    send.delete('utm')
+            }
+        })
+
+        let url = ""
+
+        if (document.getElementById('action_type').value === 'reg')
+            url = "api.php?module=account&method=registration"
+        if (document.getElementById('action_type').value === 'login')
+            url = "api.php?module=account&method=login"
+
+        if (url !== '') {
+            xmlhttp.open("POST", url);
+            xmlhttp.send(send);
+        }
+    }
+
+    function activate_(){
+        let xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function () {
+            if (this.readyState === 4)
+            {
+                let output = JSON.parse(this.responseText);
+                if ("token" in output){
+                    let nexturl = '<front_url />/?newtoken=' + output['token'];
+                    location.href = nexturl
+                }
+                else{
+                    alert("Код или телефон не верен")
+                }
+            }
+        }
+        let send = new FormData(document.getElementById('activate_form'));
+
+        send.append('phone_or_mail', document.getElementById('phone_or_mail').value)
+        send.append('utm', document.getElementById('utm').value)
+
+        let cookie = document.cookie.split(';')
+        cookie.forEach(a => {
+            if (a.indexOf('utm_id_login') !== -1){
+
+                let check = a.substr('utm_id_login='.length + 1)
+                check = check.split(',')
+
+                let f1 = false
+                check.forEach(b =>{
+                    if (b === '<utm_id />')
+                        f1 = true
+                })
+
+                if (f1)
+                    send.delete('utm')
+            }
+        })
+
+        let url = "api.php?module=account&method=registration"
+
+        xmlhttp.open("POST", url);
+        xmlhttp.send(send);
+    }
+
+</script>
+<body>
+    <h1><title /></h1>
+    <h3 id="action_title">Регистрация</h3>
+    <form id="send_form">
+        <div>
+            <input name="phone_or_mail" id="phone_or_mail" placeholder="Почта или e-mail" type="text">
+        </div>
+        <div>
+            <input name="name" placeholder="Имя" type="text" id="name_field" >
+        </div>
+        <div>
+            <input name="password" placeholder="Пароль" id="password" type="hidden" >
+        </div>
+        <div>
+            <input name="utm" id="utm" type="hidden" value="<utm_id />" >
+        </div>
+        <div>
+            <input id="submit_button" value="Зарегистрироваться" type="button" onclick="action_()" >
+        </div>
+    </form>
+    <form id="activate_form" style="display: none">
+        <div>
+            <input type="number" name="code" placeholder="Код подтверждения" />
+        </div>
+        <div>
+            <input type="text" name="password" placeholder="Пароль" />
+        </div>
+        <div>
+            <input id="activate_submit_button" value="Активировать" type="button" onclick="activate_()" >
+        </div>
+    </form>
+    <input name="type" id="action_type" value="reg" type="hidden" >
+    <div id="action_change_button">
+        Уже есть аккаунт? <a style="text-decoration: underline" onclick="change_action_type()">Войти</a>
+    </div>
+</body>
+</html>

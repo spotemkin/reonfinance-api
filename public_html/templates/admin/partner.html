@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title><site_title /></title>
+  <link rel="stylesheet" href="../templates/admin/index.css">
+  <link rel="stylesheet" href="../templates/admin/colors.css">
+  <link rel="stylesheet" href="../templates/admin/smoke-pure.css">
+  <script type="text/javascript" src="../templates/admin/index.js"></script>
+  <script type="text/javascript" src="../templates/admin/smoke-pure.js"></script>
+  <script src="https://kit.fontawesome.com/e77b55cf69.js" crossorigin="anonymous"></script>
+  <link rel="apple-touch-icon" sizes="180x180" href="../templates/favicon_io/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="../templates/favicon_io/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../templates/favicon_io/favicon-16x16.png">
+  <link rel="manifest" href="../templates/favicon_io/site.webmanifest">
+</head>
+
+<script>
+
+  function edit_item(id) {
+    let xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function () {
+      if (this.readyState === 4)
+      {
+      }
+    }
+
+    let row = document.getElementById(id);
+    let send = 'id=' + id ;
+
+    if (row.children.length > 0)
+    {
+      for (let j = 0; j < row.children[0].children.length; j++)
+      {
+        if ((row.children[0].children[j].tagName.toLowerCase() === 'input') && (row.children[0].children[j].type === 'checkbox') && !(row.children[0].children[j].checked))
+          send += '&item_' + row.children[0].children[j].name + '=' + '';
+        else
+        if ((row.children[0].children[j].tagName.toLowerCase() === 'input') || (row.children[0].children[j].tagName.toLowerCase() === 'select'))
+          send += '&item_' + row.children[0].children[j].name + '=' + row.children[0].children[j].value;
+      }
+    }
+
+    for (let i = 1; i < row.children.length; i++)
+    {
+      for (let j = 0; j < row.children[i].children.length; j++)
+      {
+        if ((row.children[i].children[j].tagName.toLowerCase() === 'input') && (row.children[i].children[j].type === 'checkbox') && !(row.children[i].children[j].checked))
+          send += '&item_' + row.children[i].children[j].name + '=' + 0;
+        else
+        if ((row.children[i].children[j].tagName.toLowerCase() === 'input') || (row.children[i].children[j].tagName.toLowerCase() === 'select'))
+          send += '&item_' + row.children[i].children[j].name + '=' + row.children[i].children[j].value;
+      }
+    }
+
+    let open = "ajax.php?module=<current_module_name />&act=edit_<current_item_name />&id=" + id;
+
+    xmlhttp.open("POST", open);
+    xmlhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xmlhttp.send(send);
+  }
+
+  function delete_item(id) {
+    let xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function () {
+      if (this.readyState === 4)
+      {
+        let id = this.responseText;
+        location.reload();
+      }
+    }
+    let open = "ajax.php?module=<current_module_name />&act=delete&id=" + id;
+    xmlhttp.open("POST", open);
+    xmlhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xmlhttp.send();
+  }
+
+  function add_item() {
+    let xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function () {
+      if (this.readyState === 4)
+      {
+      }
+    }
+    let send = new FormData(document.getElementById('add_item'));
+
+    xmlhttp.open("POST", "ajax.php?module=<current_module_name />&act=add_<current_item_name />");
+    xmlhttp.send(send);
+  }
+
+  function switch_to_disabled(id) {
+
+    let row = document.getElementById(id);
+
+    for (let i = 0; i < row.children.length; i++)
+    {
+      for (let j = 0; j < row.children[i].children.length; j++)
+      {
+        if (row.children[i].children[j].className.indexOf('blur_hide') > 0)
+          row.children[i].children[j].style.display= "none";
+      }
+    }
+  }
+
+  function switch_to_input(id) {
+
+    let row = document.getElementById(id);
+
+    for (let i = 0; i < row.children.length; i++)
+    {
+      for (let j = 0; j < row.children[i].children.length; j++)
+      {
+        if (row.children[i].children[j].className.indexOf('blur_hide') > 0)
+          row.children[i].children[j].style.display = "inline";
+      }
+    }
+  }
+
+
+  function enter_edit(id, event) {
+    if (event.which === 13){
+      edit_item(id);
+      send_image(id);
+
+      let row = document.getElementById(id);
+
+      for (let i = 0; i < row.children.length; i++)
+      {
+        for (let j = 0; j < row.children[i].children.length; j++)
+        {
+          if ((row.children[i].children[j].tagName.toLowerCase() === 'input') || (row.children[i].children[j].tagName.toLowerCase() === 'select'))
+          {
+            row.children[i].children[j].blur();
+          }
+        }
+      }
+    }
+  }
+
+  function switch_menu() {
+    if (document.getElementById('menu').style.display === 'inherit')
+      document.getElementById('menu').style.display = '';
+    else
+      document.getElementById('menu').style.display = 'inherit';
+  }
+
+  function send_image(id) {
+    let xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function () {
+      if (this.readyState === 4)
+      {
+      }
+    }
+
+    let open = "ajax.php?module=<current_module_name />&act=add_icon_<current_item_name />&id=" + id;
+
+    let fileInput = document.getElementById('add_icon_'+id);
+    if (fileInput === null)
+      return;
+    let file = fileInput.files[0];
+    let formData = new FormData();
+    formData.append('file', file);
+
+    xmlhttp.open("POST", open, true);
+    xmlhttp.send(formData);
+  }
+
+  function filter() {
+    let xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function () {
+      if (this.readyState === 4) {
+        let output = this.responseText;
+        //alert(output)
+        output = JSON.parse(output);
+        const iterator = Object.keys(output);
+        let list = '';
+        document.getElementById("dropDown").innerHTML = '';
+
+        if (this.responseText !== '{}')
+          for (const key of iterator) {
+            //console.log(output[key]);
+
+            list += '<p><a href="partner.php?id=' + output[key].split('.')[0] + '"' +
+                    ' class="courses" onclick="change_input(this)" >' + output[key] + '</a><br/></p>'
+          }
+
+        document.getElementById("dropDown").innerHTML = list;
+
+        document.getElementById("dropDown").style.zIndex = '1';
+      }
+    }
+
+    let send = new FormData();
+
+    send.append('id', document.getElementById('id').value)
+
+    let url = "partner_ajax.php?module=courses&act=filter";
+
+    xmlhttp.open("POST", url);
+    xmlhttp.send(send);
+  }
+
+  function change_input(elem){
+    //let pos = elem.innerText.indexOf('.');
+    //document.getElementById('id').value = elem.innerText;
+    document.getElementById("dropDown").innerHTML = '';
+
+    document.cookie = 'course_id=' + elem.innerText.split('.')[0];
+
+    let list = document.getElementsByClassName("courses");
+    for (let item of list) {
+      item.style.color = 'inherit'
+    }
+
+    elem.style.color = '#ffffff';
+
+    let xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function () {
+      if (this.readyState === 4)
+      {
+
+      }
+    }
+
+    window.history.pushState('page2', 'Title', '/partner.php?id='+elem.innerText.split('.')[0]);
+
+    let send = new FormData();
+
+    send.append('id', document.getElementById('id').value)
+
+    let url = "partner_ajax.php?module=account&act=course_info";
+
+    xmlhttp.open("POST", url);
+    xmlhttp.send(send);
+  }
+
+  function change_input_partner(elem){
+
+    document.getElementById('id').value = elem.innerText;
+    document.getElementById("dropDown").innerHTML = '';
+
+    let cookie = "course_id=" + elem.innerText.split('.')[0] + "; path=/"
+    //alert(cookie);
+    document.cookie = cookie;
+
+    let list = document.getElementsByClassName("courses");
+    for (let item of list) {
+      item.style.color = 'inherit'
+    }
+
+    elem.style.color = '#ffffff';
+
+    window.history.pushState('page2', 'Title', '/partner.php?id='+elem.innerText.split('.')[0]);
+
+    let xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function () {
+      if (this.readyState === 4)
+      {
+
+      }
+    }
+
+    let send = new FormData();
+
+    send.append('id', document.getElementById('id').value)
+
+    let url = "partner.php?act=course_info";
+
+    xmlhttp.open("POST", url);
+    xmlhttp.send(send);
+
+  }
+
+</script>
+<body>
+<div class="container">
+  <div class="menu_header_mobile">
+    <div class="menu_header_mobile_img">
+      <img src="/templates/admin/images/hamburger.png" onclick="switch_menu()" alt="" />
+    </div>
+    <div class="menu_header_mobile_img">
+      <img src="/templates/admin/images/logo.svg" onclick="document.cookie = 'course_id='; location.href='partner.php'" alt="" />
+    </div>
+  </div>
+  <div class="menu" id="menu">
+    <div class="menu_fixed_container">
+      <div class="logo"><img class="pointer" onclick="document.cookie = 'course_id='; location.href='partner.php'" alt="Logo" src="../templates/admin/images/logo.svg"></div>
+      <div>
+        <courses />
+      </div>
+      <menu />
+      <div class="menu_item">
+        <!--
+        <div class="menu_item_image" onmouseover="style.cursor = 'pointer';">
+            <img onclick="location.href='admin.php?module=<module_name />'" alt="" src="../modules/<module_name />/templates/images/icon.svg" />
+        </div>
+        -->
+
+        <div class="menu_item_link">
+          <a href="partner.php?act=logout" >Выход</a>
+        </div>
+      </div>
+      <!--<div class="exit_button" onclick="document.cookie = 'token='; location.href = 'admin.php'">Выход</div>-->
+    </div>
+  </div>
+  <div class="current_module">
+    <current_module />
+  </div>
+</div>
+</body>
+</html>

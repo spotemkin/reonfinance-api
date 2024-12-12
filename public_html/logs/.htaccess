@@ -1,0 +1,4 @@
+<FilesMatch ~ "\.(php|htm|html|js|log)$">
+  case allow,deny
+  Deny from all
+</FilesMatch>

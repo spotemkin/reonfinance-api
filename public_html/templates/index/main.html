@@ -1,0 +1,39 @@
+<h2>Добро пожаловать на API</h2>
+<p>На данной странице вы можете изучить документацию по API <site_name />.</p>
+
+Endpoint URL:
+<br />
+<b><site_name_long /></b>
+
+<p>Данные отправляются POST запросом.</p>
+
+
+<p>После того, как будет выполнен Login и получен токен авторизации,
+    данный токен обязательно нужно отправлять во все последующие запросы Authorization: Bearer [token], где Authorization - заголовок, [token] - токен.
+    В случае, если токен ошибочен, Вы получите ошибку status = error и сообщение с ошибкой TOKEN_NOT_FOUND</p>
+
+<div>
+    <h2>Коды ошибок</h2>
+    <table class="errors_table">
+        <tr>
+            <td>DB_CONNECTION_ERROR</td>
+            <td>Ошибка в подключении к базе данных</td>
+        </tr>
+        <tr>
+            <td>INCORRECT_MODULE</td>
+            <td>Обращение к несуществующему модулю</td>
+        </tr>
+        <tr>
+            <td>INCORRECT_METHOD</td>
+            <td>Обращение к несуществующему методу</td>
+        </tr>
+        <tr>
+            <td>BANNED_USER</td>
+            <td>Пользователь был заблокирован</td>
+        </tr>
+        <tr>
+            <td>TOKEN_NOT_FOUND</td>
+            <td>Токен не передан или не верен</td>
+        </tr>
+    </table>
+</div>

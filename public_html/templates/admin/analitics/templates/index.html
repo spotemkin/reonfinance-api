@@ -1,0 +1,66 @@
+<link rel="stylesheet" href='/modules/workspaces/templates/index.css'>
+<link rel="stylesheet" href="../../../templates/admin/Calendar/mc-calendar.min.css" />
+
+<script src="../../../templates/admin/Calendar/mc-calendar.min.js"></script>
+
+<link rel="stylesheet" href='/modules/workspaces/templates/index.css'>
+<h1>Аналитика</h1>
+Отчет:
+<form action="" method="get" style="display: inline">
+    <div style="margin-bottom: 5px">
+        <input type="hidden" name="module" value="analitics">
+        <select name="type" onchange="this.form.submit()" <!--onchange="location.href='admin.php?module=analitics&type='+this.value"-->>
+        <optgroup label="Сотрудники">
+            <option t value="u_registration_date">Дата регистрации</option>
+            <option t value="u_sex">Соотношение пользователей по полу</option>
+            <option t value="u_age">Возраст</option>
+            <option t value="u_last_act_date">Дата последней активности</option>
+        </optgroup>
+        <optgroup label="Курсы">
+            <option t value="c_users">Распределение пользователей</option>
+            <option t value="с_courses">Курс заработал</option>
+            <option t value="с_income">Мы заработали с курса (абонентка)</option>
+            <option t value="с_income_sales">Продажи</option>
+        </optgroup>
+        </select>
+    </div>
+    <date_from_to />
+</form>
+<script src="../../../templates/Charts/dist/Chart.js"></script>
+<div >
+    <br />
+    <br />
+    <canvas id="myChart" style="max-height: 400px; max-width: 700px"></canvas>
+</div>
+Количество зарегистрированных пользователей: <b><users_count /></b>
+<script>
+    var ctx = document.getElementById('myChart');
+
+    var myPieChart = new Chart(ctx, {
+        type: <type />,
+        data: {
+            labels: <labels />,
+            datasets: [{
+                data: <data />,
+                backgroundColor: <bg_color />,
+            }]
+        },
+        options: {
+            legend:{
+                display: <display />,
+                labels: {
+                    fontColor: "rgba(235, 238, 244, 1)",
+                }
+            },
+            layout:{
+                padding:{
+                    left: 0,
+                    right: 0,
+                    top: 0,
+                    bottom: 0
+                }
+            },
+            <options />
+        }
+    });
+</script>

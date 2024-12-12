@@ -1,0 +1,99 @@
+<script>
+    function test_form_send() {
+        let xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function () {
+            if (this.readyState === 4)
+            {
+                let output = this.responseText;
+                output = JSON.stringify(JSON.parse(output), undefined, 4) ;
+                output = syntaxHighlight(output);
+                document.getElementById("test_form_result").childNodes.forEach(a => a.remove());
+                document.getElementById("test_form_result").appendChild(document.createElement('pre')).innerHTML = output;
+            }
+        }
+
+        xmlhttp.open("POST", "api/<module />/<method />");
+        if (document.getElementById('token') !== null) {
+            xmlhttp.setRequestHeader('Authorization', 'Bearer ' + document.getElementById('token').value);
+        }
+        let send = new FormData(document.getElementById('form_777'));
+        xmlhttp.send(send);
+    }
+    function syntaxHighlight(json) {
+        json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
+            var cls = 'number';
+            if (/^"/.test(match)) {
+                if (/:$/.test(match)) {
+                    cls = 'key';
+                } else {
+                    cls = 'string';
+                }
+            } else if (/true|false/.test(match)) {
+                cls = 'boolean';
+            } else if (/null/.test(match)) {
+                cls = 'null';
+            }
+            return '<span class="' + cls + '">' + match + '</span>';
+        });
+    }
+</script>
+<style>
+    pre {padding: 5px; margin: 5px; }
+    .string { color: #00f800; }
+    .number { color: #ff8c00; }
+    .boolean { color: #6fbeff; }
+    .null { color: #ff4ce2; }
+    .key { color: #ff915f; }
+</style>
+<div>
+    <div>
+        <h1>
+            <module />/<method />
+        </h1>
+        <p>
+            <method_discription />
+        </p>
+    </div>
+    <div>
+        <h2>Параметры</h2>
+        <table class="params_table" id="params_table">
+            <tr style="<no_params />">
+                <td>Название</td>
+                <td>Описание</td>
+                <td>Тип</td>
+                <td>Обязательный</td>
+            </tr>
+            <params />
+        </table>
+    </div>
+    <div>
+        <h2>Результат</h2>
+        <result />
+    </div>
+    <div>
+        <h2>Коды ошибок</h2>
+        <table class="errors_table">
+            <errors />
+        </table>
+    </div>
+    <div class="test_method">
+        <h2>Тест запроса</h2>
+        <no_test_form />
+        <div style="<no_form />">
+            <table style="width: 100%;" class="test_method_table">
+                <tr>
+                    <td class="test_method_table_cell test_method_table_cell_input" >
+                        <form id="form_777">
+                            <test_form />
+                            <div><input class="submit" type="button" value="Выполнить" onclick="test_form_send()"/></div>
+                        </form>
+                    </td>
+                    <td class="test_answer test_method_table_cell">
+                        <div id="test_form_result">Введите данные и нажмите выполнить</div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>

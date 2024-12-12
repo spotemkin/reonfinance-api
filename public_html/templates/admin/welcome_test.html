@@ -1,0 +1,400 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title><title /></title>
+    <utm_html />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <title><title /></title>
+    <link type="text/css" href="../../templates/admin/assets/css/style.css" rel="stylesheet">
+</head>
+<script>
+
+    function change_action_type(){
+        if (document.getElementById('action_type').value === 'reg'){
+            document.getElementById('action_title').innerHTML = 'Вход'
+            document.getElementById('submit_button').value = 'Войти'
+            document.getElementById('name_field').type = 'hidden'
+            document.getElementById('activate_form').style.display = 'none'
+            document.getElementById('send_form').style.display = 'flex'
+            document.getElementById('password').type = 'password'
+            document.getElementById('action_type').value = 'login'
+            document.getElementById('action_change_button').innerHTML =
+                'Нет аккаунта? <a style="text-decoration: underline" onclick="change_action_type()">Регистрация</a> |' +
+                ' <a href="<front_url />/resetpassword" style="text-decoration: underline; color: inherit">Забыл пароль</a>'
+        }
+        else if (document.getElementById('action_type').value === 'login'){
+            document.getElementById('action_title').innerHTML = 'Регистрация'
+            document.getElementById('submit_button').value = 'Зарегистрироваться'
+            document.getElementById('activate_form').style.display = 'none'
+            document.getElementById('send_form').style.display = 'flex'
+            document.getElementById('password').type = 'hidden'
+            document.getElementById('name_field').type = 'text'
+            document.getElementById('action_type').value = 'reg'
+            document.getElementById('action_change_button').innerHTML =
+                'Уже есть аккаунт? <a style="text-decoration: underline" onclick="change_action_type()">Войти</a>'
+        }
+    }
+
+    function open_reg(){
+        document.getElementById('reg').style.display = 'inherit';
+
+        let top = document.getElementById('reg').offsetTop; //Getting Y of target element
+        window.scrollTo(0, top);
+    }
+
+    function action_(){
+        let xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function () {
+            if (this.readyState === 4)
+            {
+                let output = JSON.parse(this.responseText);
+                //alert(document.cookie)
+                if (this.responseText === '{}'){
+                    document.getElementById('send_form').style.display = 'none'
+                    document.getElementById('activate_form').style.display = 'flex'
+                }
+                else if ("token" in output){
+                    let cookie = document.cookie.split(';')
+
+                    let f = false
+                    let date = new Date();
+
+                    // Default at 365 days.
+                    let days = 1000000;
+
+                    date.setTime(+ date + (days * 86400000));
+
+                    // Get unix milliseconds at current time plus number of days
+                    date.setTime(+ date + (days * 86400000)); //24 * 60 * 60 * 1000
+                    cookie.forEach(a => {
+                        if (a.indexOf('utm_id_login') !== -1){
+                            f = true
+                            let check = a.substr('utm_id_login='.length + 1)
+                            check = check.split(',')
+                            let new_utm_id_login = a + "; max-age=31536000; path=/"
+
+                            let f1 = false
+                            check.forEach(b =>{
+                                if (b === '<utm_id />')
+                                    f1 = true
+                            })
+
+                            if (!f1)
+                                new_utm_id_login = a + ',' + <utm_id /> + "; max-age=31536000; path=/"
+
+                            document.cookie = new_utm_id_login
+                        }
+                        else if (!f){
+                            let new_utm_id_login = 'utm_id_login=' + <utm_id /> + "; max-age=31536000; path=/"
+                            document.cookie = new_utm_id_login
+                        }
+                    })
+
+                    let nexturl = '<front_url />/?newtoken=' + output['token'];
+                    location.href = nexturl
+                }
+                else if ("error" in output){
+                    if (output['error'] === 'ALREADY_ACTIVATED')
+                        alert("Пользовать с таким телефоном уже существует")
+                    else if (output['error'] === 'NEED_ACTIVATION')
+                    {
+                        alert("Введите полученный код")
+                        document.getElementById('send_form').style.display = 'none'
+                        document.getElementById('activate_form').style.display = 'flex'
+                    }
+                    else if (output['error'] === 'CODE_INVALID')
+                    {
+                        alert("Неверный код активации")
+                    }
+                    else if (output['error'] === 'INCORRECT_PHONE_OR_MAIL')
+                    {
+                        alert("Номер телефона не верен")
+                    }
+                    else if (output['error'] === 'PHONE_OR_MAIL_NOT_FOUND')
+                    {
+                        alert("Номер телефона не передан")
+                    }
+                    else if (output['error'] === 'PASS_NOT_FOUND')
+                    {
+                        alert("Пароль не передан")
+                    }
+                    else if (output['error'] === 'MIN_PASS')
+                    {
+                        alert("Пароль должен состоять минимум из 6 символов")
+                    }
+                    else if (output['error'] === 'USER_BANNED')
+                    {
+                        alert("Вы были заблокированы")
+                    }
+                    else if (output['error'] === 'LOGIN_OR_PASS_INCORRECT')
+                    {
+                        alert("Пользователь с такими данными не найден")
+                    }
+                    else{
+                        alert("Произошла ошибка. Попробуйте позже")
+                    }
+                }
+                else{
+                    alert("Произошла ошибка. Попробуйте позже")
+                }
+            }
+        }
+        let send = new FormData(document.getElementById('send_form'));
+
+        let cookie = document.cookie.split(';')
+        cookie.forEach(a => {
+            if (a.indexOf('utm_id_login') !== -1){
+
+                let check = a.substr('utm_id_login='.length + 1)
+                check = check.split(',')
+
+                let f1 = false
+                check.forEach(b =>{
+                    if (b === '<utm_id />')
+                        f1 = true
+                })
+
+                if (f1)
+                    send.delete('utm')
+            }
+        })
+
+        let url = ""
+
+        if (document.getElementById('action_type').value === 'reg') {
+            if (document.getElementById('phone_or_mail').value === '')
+            {
+                alert('Введите телефон или e-mail')
+                return
+            }
+            if (document.getElementById('name_field').value === ''){
+                alert('Введите имя')
+                return
+            }
+            url = "api.php?module=account&method=registration"
+        }
+        if (document.getElementById('action_type').value === 'login') {
+            if (document.getElementById('phone_or_mail').value === '')
+            {
+                alert('Введите телефон или e-mail')
+                return
+            }
+            if (document.getElementById('password').value.length < 6){
+                alert('Пароль должен состоять минимум из 6 символов')
+                return
+            }
+            url = "api.php?module=account&method=login"
+        }
+
+        if (url !== '') {
+            xmlhttp.open("POST", url);
+            xmlhttp.send(send);
+        }
+    }
+
+    function activate_(){
+        let xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function () {
+            if (this.readyState === 4)
+            {
+                let output = JSON.parse(this.responseText);
+                if ("token" in output){
+                    let nexturl = '<front_url />/?newtoken=' + output['token'];
+                    location.href = nexturl
+                }
+                else if ("error" in output){
+                    if (output['error'] === 'ALREADY_ACTIVATED')
+                        alert("Пользовать с таким телефоном уже существует")
+                    else if (output['error'] === 'NEED_ACTIVATION')
+                    {
+                        alert("Введите полученный код")
+                        document.getElementById('send_form').style.display = 'none'
+                        document.getElementById('activate_form').style.display = 'flex'
+                    }
+                    else if (output['error'] === 'CODE_INVALID')
+                    {
+                        alert("Неверный код активации")
+                    }
+                    else if (output['error'] === 'INCORRECT_PHONE_OR_MAIL')
+                    {
+                        alert("Номер телефона не верен")
+                    }
+                    else if (output['error'] === 'PHONE_OR_MAIL_NOT_FOUND')
+                    {
+                        alert("Номер телефона не передан")
+                    }
+                    else if (output['error'] === 'PASS_NOT_FOUND')
+                    {
+                        alert("Пароль не передан")
+                    }
+                    else if (output['error'] === 'MIN_PASS')
+                    {
+                        alert("Пароль должен состоять минимум из 6 символов")
+                    }
+                    else if (output['error'] === 'USER_BANNED')
+                    {
+                        alert("Вы были заблокированы")
+                    }
+                    else if (output['error'] === 'LOGIN_OR_PASS_INCORRECT')
+                    {
+                        alert("Пользователь с такими данными не найден")
+                    }
+                    else{
+                        alert("Произошла ошибка. Попробуйте позже")
+                    }
+                }
+                else{
+                    alert("Произошла ошибка. Попробуйте позже")
+                }
+            }
+        }
+        let send = new FormData(document.getElementById('activate_form'));
+
+        send.append('phone_or_mail', document.getElementById('phone_or_mail').value)
+        send.append('utm', document.getElementById('utm').value)
+
+        let cookie = document.cookie.split(';')
+        cookie.forEach(a => {
+            if (a.indexOf('utm_id_login') !== -1){
+
+                let check = a.substr('utm_id_login='.length + 1)
+                check = check.split(',')
+
+                let f1 = false
+                check.forEach(b =>{
+                    if (b === '<utm_id />')
+                        f1 = true
+                })
+
+                if (f1)
+                    send.delete('utm')
+            }
+        })
+
+        if (document.getElementById('code').value === '')
+        {
+            alert('Введите код подтверждения')
+            return
+        }
+        if (document.getElementById('phone_or_mail').value === '')
+        {
+            alert('Попробуйте еще раз')
+            return
+        }
+        if (document.getElementById('password_activate').value.length < 6){
+            alert('Пароль должен состоять минимум из 6 символов')
+            return
+        }
+
+        let url = "api.php?module=account&method=registration"
+
+        xmlhttp.open("POST", url);
+        xmlhttp.send(send);
+    }
+
+</script>
+<body class="promo">
+    <header>
+        <div class="container" style="display: <no_logo />">
+            <div class="logo center"><img src="../../templates/admin/assets/img/logo.svg"></div>
+        </div>
+    </header>
+    <section id="inform">
+        <div class="container">
+            <div class="title"><title /></div>
+            <form>
+                <div class="left">
+                    <img src="<image />">
+                </div>
+                <div class="right">
+                    <div class="text"><description /></div>
+                    <div class="bot">
+<!--                            <input value="" placeholder="Пароль" type="password">-->
+                        <input type="button" class="btn" value="Записаться на курс" onclick="open_reg()">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+    <section id="description">
+        <div class="container" style="display: <no_partner_disc />">
+
+            <div class="text">
+                <partner_description />
+            </div>
+        </div>
+    </section>
+    <section id="about">
+        <div class="container" style="display: <no_partner_about />">
+            <div class="title"><header_about /></div>
+            <div class="text">
+                <partner_about />
+            </div>
+        </div>
+    </section>
+    <section id="otziv">
+        <div class="container" style="display: <no_author />">
+            <div class="flex">
+                <div class="img">
+                    <img src="<photo />">
+                </div>
+                <div class="mess">
+                    <div class="avtor">Автор курса</div>
+                    <div class="name"><teacher_name /></div>
+                    <div class="avtor" style="display: <no_disc />">О себе</div>
+                    <div class="tetx"><teacher_description /></div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="for_whom">
+        <div class="container" style="display: <no_partner_for_whom />">
+            <div class="title"><header_for_whom /></div>
+            <div class="text">
+                <partner_for_whom />
+            </div>
+        </div>
+    </section>
+    <section id="reg">
+        <div class="container">
+            <div id="action_title" class="title">Регистрация</div>
+            <form id="send_form">
+                <div class="input_container">
+                    <input name="phone_or_mail" id="phone_or_mail" placeholder="Телефон или e-mail" type="text">
+                </div>
+                <div class="input_container">
+                    <input name="name" placeholder="Имя" type="text" id="name_field" >
+                </div>
+                <div class="input_container">
+                    <input name="password" placeholder="Пароль" id="password" type="hidden" >
+                </div>
+                <div class="input_container">
+                    <input name="utm" id="utm" type="hidden" value="<utm_id />" >
+                </div>
+                <div class="input_container">
+                    <input id="submit_button" class="btn" value="Зарегистрироваться" type="button" onclick="action_()" >
+                </div>
+            </form>
+            <form id="activate_form" style="display: none">
+                <div class="input_container">
+                    <input type="number" name="code" id="code" placeholder="Код подтверждения" />
+                </div>
+                <div class="input_container">
+                    <input type="password" name="password" id="password_activate" placeholder="Пароль" />
+                </div>
+                <div class="input_container">
+                    <input id="activate_submit_button" class="btn" value="Активировать" type="button" onclick="activate_()" >
+                </div>
+            </form>
+            <input name="type" id="action_type" value="reg" type="hidden" >
+            <form>
+                <div id="action_change_button" style="margin-top: 25px">
+                    Уже есть аккаунт? <a style="text-decoration: underline" onclick="change_action_type();">Войти</a>
+                </div>
+            </form>
+        </div>
+    </section>
+</body>
+</html>

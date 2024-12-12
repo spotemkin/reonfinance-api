@@ -1,0 +1,24 @@
+<tr class="items_row" id="<user_id />" onmouseover="switch_to_input(<user_id />)" onmouseout="switch_to_disabled(<user_id />)"
+    onkeypress="enter_edit(<user_id />, event)" onfocusout="edit_item(<user_id />)">
+    <td class="items_cell">
+        <span><user_name /></span>
+    </td>
+    <td class="items_cell">
+        <span><user_mail /></span>
+    </td>
+    <td class="items_cell">
+        <span><user_tg_login /></span>
+    </td>
+    <td class="items_cell">
+        <span><user_last_act_date /></span>
+    </td>
+    <td class="items_cell">
+        <span><user_registration_date /></span>
+    </td>
+    <td class="items_cell items_cell_icons">
+        &nbsp;
+        <i class="fas fa-trash blur_hide" style="display: none" onclick="if (confirm('Вы точно хотите удалить данного пользователя?')) delete_item(<user_id />)" alt="Удалить" title="Удалить"></i>
+        &nbsp;
+        <i class="fas fa-edit blur_hide" style="display: none" onclick="location.href='admin.php?module=account&act=edit&id=<user_id />'" alt="Редактировать" title="Редактировать"></i>
+    </td>
+</tr>

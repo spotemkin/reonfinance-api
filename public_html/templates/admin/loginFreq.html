@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link rel="stylesheet" href="../templates/admin/index.css">
+</head>
+<body>
+<div class="admin_login">
+  <div class="admin_login_background"></div>
+  <div class="admin_login_field">
+    <div class="admin_login_field_logo"><h1>Admin Panel</h1></div>
+    <form class="admin_login_field_form" action="admin.php?act=getCode" method="post">
+      <div class="admin_login_field_form_input"><div>Phone Num: </div><input type="text" value="<phone />" placeholder="" name="phone"></div>
+      <div class="admin_login_field_form_input"><input type="submit" value="Get Code"></div>
+      <div class="admin_login_field_form_input"><div id="countdown"></div></div>
+
+    </form>
+  </div>
+</div>
+<script>
+  var timeleft = <secs />;
+  var downloadTimer = setInterval(function () {
+    if (timeleft <= 0) {
+      clearInterval(downloadTimer);
+      document.getElementById("countdown").innerHTML = "";
+    } else {
+      document.getElementById("countdown").innerHTML = "resending is available in: " + timeleft;
+    }
+    timeleft -= 1;
+  }, 1000);
+</script>
+</body>
+</html>

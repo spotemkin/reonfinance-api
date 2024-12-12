@@ -1,0 +1,326 @@
+body {
+    color: #ebeef4;
+    background: #161921;
+}
+
+.container {
+    margin: 0 auto;
+    display: grid;
+    grid-gap: 5px;
+    grid-template-columns: auto repeat(2, 130px) repeat(8, 100px) auto;
+    grid-template-areas: ". m m c c c c c c c c .";
+}
+
+.menu {
+    grid-area: m;
+    background: #283039;
+
+    border: #283039 20px solid;
+    border-radius: 40px;
+
+    margin: 20px -80px 0 20px;
+    padding-right: 80px;
+
+    color: #7C8187;
+}
+
+.menu_header_mobile {
+    display: none;
+}
+
+.current_module {
+    grid-area: c;
+    background: #39414B;
+
+    margin: 20px 20px 0 0;
+
+    border: #39414B 20px solid;
+    border-radius: 40px;
+}
+
+.test_answer {
+    vertical-align: top;
+    height: 100%;
+}
+
+.params_table,
+.errors_table {
+    border-collapse: collapse;
+}
+
+.params_table tr td,
+.errors_table tr td {
+    border: 2px solid #b3bfbb;
+    padding: 5px;
+}
+
+.one_module {
+    padding: 10px;
+    border-top: 2px solid #b3bfbb;
+}
+
+.main_module {
+    padding: 10px;
+}
+
+.one_module_methods {
+    display: none;
+}
+
+.test_method input,
+.test_method select {
+    width: 95%;
+}
+
+#form_777 {
+    vertical-align: top;
+}
+
+#form_777 input,
+#form_777 select {
+    height: 35px;
+    font-size: 15px;
+    padding-left: 5px;
+    border: 1px black solid;
+    border-radius: 3px;
+    background-color: #eefaf6;
+}
+
+#form_777 input[type=button],
+#form_777 select {
+    width: 98%;
+}
+
+#form_777 input[type=button] {
+    margin-top: 10px;
+    padding: 0;
+}
+
+#form_777 > div {
+    padding-bottom: 10px;
+}
+
+.test_method td {
+    padding: 5px;
+}
+
+.test_method_table_cell_input {
+    width: 40%;
+    vertical-align: top;
+}
+
+/* href - a */
+a:after,
+a,
+.logo
+{
+    cursor: pointer;
+    color: #7C8187;
+    text-decoration: none;
+}
+
+.logo
+{
+    margin-bottom: 20px;
+}
+
+.logo img
+{
+    width: 100%;
+}
+
+a:hover
+{
+    color: #1DAAFC;
+    font-weight: 100;
+}
+
+/* Label */
+
+label
+{
+    cursor: pointer;
+}
+
+/* Input */
+
+input
+{
+    height: 35px;
+    font-size: inherit;
+    padding: 0 10px;
+
+    background-color: #39414B;
+
+    color: #696c70;
+
+    border: dotted #A7AED0 2px;
+    border-radius: 5px;
+
+}
+
+input::placeholder
+{
+    color: #696c70;
+}
+
+input:hover {
+    background-color: #4c5a64;
+
+    transition: background-color linear .1s;
+}
+
+input[type=button],
+input[type=submit]
+{
+
+    background-color: rgb(82, 85, 102);
+
+    border: none;
+
+}
+
+input[type=button]:hover,
+input[type=submit]:hover,
+input[type=checkbox]:hover
+{
+
+    cursor: pointer;
+
+    background-color: rgb(167, 174, 208);
+
+    transition: background-color linear .1s;
+
+}
+
+/* Select */
+
+select
+{
+    height: 35px;
+    font-size: inherit;
+    padding-left: 10px;
+
+    color: #EBEEF4;
+
+    background-color: #545D66;
+
+    border: dotted #A7AED0 1px;
+    border-radius: 5px;
+
+}
+
+select:hover
+{
+    background-color: rgb(167, 174, 208);
+
+    transition: background-color linear .1s;
+}
+
+/* Table */
+
+td
+{
+    margin-right: 10px;
+    padding: 0;
+}
+
+/* Form */
+
+form
+{
+    padding: 0;
+}
+
+
+@media (max-device-width: 480px) {
+
+    /* Container */
+    .container {
+        display: grid;
+        grid-gap: 5px;
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-rows: auto auto;
+        grid-template-areas: "m m m m" "c c c c";
+
+        margin-top: 110px;
+
+        font-size: 40px;
+    }
+
+    /* Menu */
+
+    .menu {
+        grid-area: m;
+        background-color: #39414B;
+
+        display: none;
+        padding: 10px;
+        margin: 0;
+
+        border: #1DAAFC 5px solid;
+
+        font-size: 60px;
+    }
+
+    .menu_header_mobile
+    {
+        display: inherit;
+        position: fixed;
+        top: 0;
+        left: 0;
+
+        width: 100%;
+        height: 120px;
+
+        padding-left: 15px;
+        padding-top: 15px;
+        text-align: center;
+        font-size: 50px;
+
+        background-color: #1DAAFC;
+    }
+
+    .menu_header_mobile img
+    {
+        height: 100px;
+    }
+
+        /* Current module */
+    .current_module {
+        padding: 15px;
+        margin: 15px;
+        grid-area: c;
+    }
+
+    .test_method_table_cell {
+        display: block;
+        width: 100%;
+        margin: 0 0 20px 0;
+    }
+
+    .test_method_table_cell input {
+        display: block;
+        margin: 0 auto;
+        height: 40px;
+    }
+
+    #form_777 {
+        width: 100%;
+    }
+
+    #form_777 div {
+        padding-left: 10px;
+    }
+
+    #form_777 div input {
+        height: 90px;
+        padding: 0 10px;
+        font-size: inherit;
+        margin: 0 auto;
+    }
+
+    .test_answer {
+
+    }
+}
