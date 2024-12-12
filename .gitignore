@@ -1,0 +1,14 @@
+local exeptions
+
+nginx.conf
+Dockerfile.miniappapi.local
+dc-miniappapi-local.yaml
+fastcgi-php.conf
+miniapp_test.gz
+*.env*
+/db_data
+/logs/nginx
+/logs/php
+my.cnf
+start.sh
+bash-*
